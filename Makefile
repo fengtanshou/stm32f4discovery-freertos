@@ -45,16 +45,22 @@ LIBGCC  = $(shell $(CC) -mthumb -mcpu=cortex-m4 -print-libgcc-file-name)
 # project sources
 
 DEMO_SRCS += \
+	src/main.c \
 	src/startup_stm32f4xx.s \
 	src/system_stm32f4xx.c \
 	src/stdlib.c \
-	src/main.c
+	src/stubs.c \
+	src/misc.c \
+	src/isr.c
 
 # vendor sources
 
 DEMO_SRCS += \
+	$(STM_DIR)/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c \
 	$(STM_DIR)/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_gpio.c \
-	$(STM_DIR)/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_rcc.c
+	$(STM_DIR)/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_exti.c \
+	$(STM_DIR)/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_rcc.c \
+	$(STM_DIR)/STM32F4xx_StdPeriph_Driver/src/misc.c
 
 DEMO_SRCS += \
 	$(FREERTOS_DIR)/Source/list.c \

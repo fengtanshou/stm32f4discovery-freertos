@@ -5,23 +5,6 @@
 typedef uint16_t u16_t;
 typedef uint8_t u8_t;
 
-/* stubs */
-
-void __aeabi_unwind_cpp_pr0(void)
-{
-
-}
-
-void __aeabi_unwind_cpp_pr1(void)
-{
-
-}
-
-void __libc_init_array(void)
-{
-
-}
-
 /* stdlib functions */
 
 char * strncpy(char *dest, const char *src, size_t n)
