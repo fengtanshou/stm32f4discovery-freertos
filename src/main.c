@@ -6,11 +6,14 @@
 
 #include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
+#include "queue.h"
 #include "task.h"
 
 GPIO_InitTypeDef gpio_init;
 NVIC_InitTypeDef nvic_init;
 EXTI_InitTypeDef exti_init;
+
+xQueueHandle xQueue;
 
 static void hw_init(void)
 {
@@ -88,6 +91,21 @@ static void LedFlash(void *Parameters)
 	}
 }
 
+static void BlueLedControl(void *Parameters)
+{
+	portTickType LastWake;
+	unsigned char c;
+
+	GPIO_SetBits(GPIOD, GPIO_Pin_15);
+
+	LastWake = xTaskGetTickCount();
+
+	while(1) {
+		xQueueReceive(xQueue, &c, 10000);
+		GPIO_ToggleBits(GPIOD, GPIO_Pin_15);
+	}
+}
+
 int main()
 {
 
@@ -106,6 +124,11 @@ int main()
 	xTaskCreate(LedFlash, (signed char *) "c", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_14, tskIDLE_PRIORITY + 3, NULL);
 
 	blink(3, GPIOD, GPIO_Pin_14);
+
+	xQueue = xQueueCreate( 10, sizeof( unsigned char ) );
+	xTaskCreate(BlueLedControl, (signed char *) "d", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_15, tskIDLE_PRIORITY + 3, NULL);
+
+	blink(3, GPIOD, GPIO_Pin_15);
 
 	vTaskStartScheduler();
 
