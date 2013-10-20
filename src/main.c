@@ -9,6 +9,13 @@
 #include "queue.h"
 #include "task.h"
 
+#include "usbd_hid_core.h"
+#include "usbd_desc.h"
+#include "usbd_usr.h"
+#include "usb_conf.h"
+
+__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+
 GPIO_InitTypeDef gpio_init;
 NVIC_InitTypeDef nvic_init;
 EXTI_InitTypeDef exti_init;
@@ -17,6 +24,11 @@ xQueueHandle xQueue;
 
 static void hw_init(void)
 {
+
+	/* Enable USB device */
+
+	// FIXME: for some reason it is crucial to init usb prior to the rest of h/w init
+	USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_HID_cb, &USR_cb);
 
 	/* Ensure all priority bits are assigned as preemption priority bits. */
 
@@ -91,6 +103,25 @@ static void LedFlash(void *Parameters)
 	}
 }
 
+static void USBTask(void *Parameters)
+{
+	uint8_t hid_buffer[4] = {0};
+	portTickType LastWake;
+
+	GPIO_SetBits(GPIOD, GPIO_Pin_14);
+
+	LastWake = xTaskGetTickCount();
+
+	while(1) {
+		hid_buffer[0] += 1;
+		hid_buffer[1] += 1;
+
+		USBD_HID_SendReport(&USB_OTG_dev, hid_buffer, 4);
+		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
+		vTaskDelayUntil(&LastWake, 3000);
+	}
+}
+
 static void BlueLedControl(void *Parameters)
 {
 	portTickType LastWake;
@@ -108,27 +139,21 @@ static void BlueLedControl(void *Parameters)
 
 int main()
 {
-
 	hw_init();
-
 	blink(5, GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
 
-	xTaskCreate(LedFlash, (signed char *) "a", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_12, tskIDLE_PRIORITY + 2, NULL);
-
+	xTaskCreate(LedFlash, (signed char *) "led1", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_12, tskIDLE_PRIORITY + 2, NULL);
 	blink(3, GPIOD, GPIO_Pin_12);
 
-	xTaskCreate(LedFlash, (signed char *) "b", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_13, tskIDLE_PRIORITY + 3, NULL);
-
+	xTaskCreate(LedFlash, (signed char *) "led2", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_13, tskIDLE_PRIORITY + 3, NULL);
 	blink(3, GPIOD, GPIO_Pin_13);
 
-	xTaskCreate(LedFlash, (signed char *) "c", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_14, tskIDLE_PRIORITY + 3, NULL);
-
-	blink(3, GPIOD, GPIO_Pin_14);
-
 	xQueue = xQueueCreate( 10, sizeof( unsigned char ) );
-	xTaskCreate(BlueLedControl, (signed char *) "d", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_15, tskIDLE_PRIORITY + 3, NULL);
-
+	xTaskCreate(BlueLedControl, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
 	blink(3, GPIOD, GPIO_Pin_15);
+
+	xTaskCreate(USBTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+	blink(3, GPIOD, GPIO_Pin_14);
 
 	vTaskStartScheduler();
 
