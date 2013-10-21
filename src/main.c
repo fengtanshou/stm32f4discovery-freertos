@@ -24,16 +24,6 @@ xQueueHandle xQueue;
 
 static void hw_init(void)
 {
-
-	/* Enable USB device */
-
-	// FIXME: for some reason it is crucial to init usb prior to the rest of h/w init
-	USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_HID_cb, &USR_cb);
-
-	/* Ensure all priority bits are assigned as preemption priority bits. */
-
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
-
 	/* GPIOD Periph clock enable */
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -84,6 +74,23 @@ static void hw_init(void)
 	nvic_init.NVIC_IRQChannelSubPriority = 0x01;
 	nvic_init.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&nvic_init);
+
+	/* Enable USB device */
+
+	USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_HID_cb, &USR_cb);
+
+	/*
+		http://www.freertos.org/RTOS-Cortex-M3-M4.html
+		Preempt priority and subpriority:
+
+			If you are using an STM32 with the STM32 driver library then ensure all the
+			priority bits are assigned to be preempt priority bits by calling
+			NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 ); before the RTOS is started.
+	*/
+
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
+
+	/* DON'T PUT ANYTHING HERE AFTER NVIC PRIO GROUP ARE PROPERLY CONFIGURED FOR FREERTOS */
 }
 
 static void LedFlash(void *Parameters)
@@ -103,7 +110,7 @@ static void LedFlash(void *Parameters)
 	}
 }
 
-static void USBTask(void *Parameters)
+static void USBHidTask(void *Parameters)
 {
 	uint8_t hid_buffer[4] = {0};
 	portTickType LastWake;
@@ -152,7 +159,7 @@ int main()
 	xTaskCreate(BlueLedControl, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
 	blink(3, GPIOD, GPIO_Pin_15);
 
-	xTaskCreate(USBTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+	xTaskCreate(USBHidTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 	blink(3, GPIOD, GPIO_Pin_14);
 
 	vTaskStartScheduler();

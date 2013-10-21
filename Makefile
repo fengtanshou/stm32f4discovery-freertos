@@ -83,8 +83,6 @@ DEMO_SRCS += \
 
 # ST USB driver
 
-CFLAGS += -DUSE_USB_OTG_FS=1
-
 CFLAGS += \
 	-I$(STM_DIR)/Libraries/STM32_USB_Device_Library/Core/inc \
 	-I$(STM_DIR)/Libraries/STM32_USB_Device_Library/Class/hid/inc \
@@ -101,12 +99,12 @@ DEMO_SRCS += \
 
 # Project USB functionality
 
-CFLAGS += -Iusb
+CFLAGS += -Iusb_fs_hid
 
 DEMO_SRCS += \
-	usb/usb_bsp.c \
-	usb/usbd_usr.c \
-	usb/usbd_desc.c
+	usb_fs_hid/usb_bsp.c \
+	usb_fs_hid/usbd_usr.c \
+	usb_fs_hid/usbd_desc.c
 
 #
 
