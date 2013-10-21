@@ -4,7 +4,7 @@
 #include "queue.h"
 #include "task.h"
 
-#include "usbd_hid_core.h"
+#include "usbd_cdc_core.h"
 #include "usbd_desc.h"
 #include "usbd_usr.h"
 #include "usb_conf.h"

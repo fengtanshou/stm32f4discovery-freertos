@@ -85,26 +85,27 @@ DEMO_SRCS += \
 
 CFLAGS += \
 	-I$(STM_DIR)/Libraries/STM32_USB_Device_Library/Core/inc \
-	-I$(STM_DIR)/Libraries/STM32_USB_Device_Library/Class/hid/inc \
+	-I$(STM_DIR)/Libraries/STM32_USB_Device_Library/Class/cdc/inc \
 	-I$(STM_DIR)/Libraries/STM32_USB_OTG_Driver/inc/
 
 DEMO_SRCS += \
 	$(STM_DIR)/Libraries/STM32_USB_Device_Library/Core/src/usbd_req.c \
 	$(STM_DIR)/Libraries/STM32_USB_Device_Library/Core/src/usbd_core.c \
 	$(STM_DIR)/Libraries/STM32_USB_Device_Library/Core/src/usbd_ioreq.c \
-	$(STM_DIR)/Libraries/STM32_USB_Device_Library/Class/hid/src/usbd_hid_core.c \
+	$(STM_DIR)/Libraries/STM32_USB_Device_Library/Class/cdc/src/usbd_cdc_core.c \
 	$(STM_DIR)/Libraries/STM32_USB_OTG_Driver/src/usb_core.c \
 	$(STM_DIR)/Libraries/STM32_USB_OTG_Driver/src/usb_dcd.c \
 	$(STM_DIR)/Libraries/STM32_USB_OTG_Driver/src/usb_dcd_int.c
 
 # Project USB functionality
 
-CFLAGS += -Iusb_fs_hid
+CFLAGS += -Iusb_fs_vcp
 
 DEMO_SRCS += \
-	usb_fs_hid/usb_bsp.c \
-	usb_fs_hid/usbd_usr.c \
-	usb_fs_hid/usbd_desc.c
+	usb_fs_vcp/usb_bsp.c \
+	usb_fs_vcp/usbd_usr.c \
+	usb_fs_vcp/usbd_desc.c \
+	usb_fs_vcp/usbd_cdc_vcp.c
 
 #
 

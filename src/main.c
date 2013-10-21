@@ -9,7 +9,7 @@
 #include "queue.h"
 #include "task.h"
 
-#include "usbd_hid_core.h"
+#include "usbd_cdc_core.h"
 #include "usbd_desc.h"
 #include "usbd_usr.h"
 #include "usb_conf.h"
@@ -77,7 +77,7 @@ static void hw_init(void)
 
 	/* Enable USB device */
 
-	USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_HID_cb, &USR_cb);
+	USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_CDC_cb, &USR_cb);
 
 	/*
 		http://www.freertos.org/RTOS-Cortex-M3-M4.html
@@ -110,9 +110,11 @@ static void LedFlash(void *Parameters)
 	}
 }
 
-static void USBHidTask(void *Parameters)
+static void USBCdcTask(void *Parameters)
 {
-	uint8_t hid_buffer[4] = {0};
+	uint8_t buf[128];
+	uint8_t len;
+
 	portTickType LastWake;
 
 	GPIO_SetBits(GPIOD, GPIO_Pin_14);
@@ -120,12 +122,12 @@ static void USBHidTask(void *Parameters)
 	LastWake = xTaskGetTickCount();
 
 	while(1) {
-		hid_buffer[0] += 1;
-		hid_buffer[1] += 1;
-
-		USBD_HID_SendReport(&USB_OTG_dev, hid_buffer, 4);
+		len = VCP_get_string(&buf[0]);
+		if (len) {
+			VCP_send_str(&buf[0]);
+		}
 		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
-		vTaskDelayUntil(&LastWake, 3000);
+		vTaskDelayUntil(&LastWake, 1000);
 	}
 }
 
@@ -159,7 +161,7 @@ int main()
 	xTaskCreate(BlueLedControl, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
 	blink(3, GPIOD, GPIO_Pin_15);
 
-	xTaskCreate(USBHidTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+	xTaskCreate(USBCdcTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 	blink(3, GPIOD, GPIO_Pin_14);
 
 	vTaskStartScheduler();
