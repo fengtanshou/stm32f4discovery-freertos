@@ -6,7 +6,7 @@
 
 #include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
-#include "queue.h"
+#include "semphr.h"
 #include "task.h"
 
 #include "usbd_cdc_core.h"
@@ -20,7 +20,8 @@ GPIO_InitTypeDef gpio_init;
 NVIC_InitTypeDef nvic_init;
 EXTI_InitTypeDef exti_init;
 
-xQueueHandle xQueue;
+xSemaphoreHandle blue_sig;
+xSemaphoreHandle usb_rx_sig;
 
 static void hw_init(void)
 {
@@ -100,13 +101,13 @@ static void LedFlash(void *Parameters)
 
 	portTickType LastWake;
 
-	GPIO_SetBits(GPIOD, pin);
-
 	LastWake = xTaskGetTickCount();
+
+	GPIO_SetBits(GPIOD, pin);
 
 	while(1) {
 		GPIO_ToggleBits(GPIOD, pin);
-		vTaskDelayUntil(&LastWake, 100*num);
+		vTaskDelayUntil(&LastWake, num*100);
 	}
 }
 
@@ -133,15 +134,10 @@ static void USBCdcTask(void *Parameters)
 
 static void BlueLedControl(void *Parameters)
 {
-	portTickType LastWake;
-	unsigned char c;
-
 	GPIO_SetBits(GPIOD, GPIO_Pin_15);
 
-	LastWake = xTaskGetTickCount();
-
 	while(1) {
-		xQueueReceive(xQueue, &c, 10000);
+		xSemaphoreTake(blue_sig, portMAX_DELAY);
 		GPIO_ToggleBits(GPIOD, GPIO_Pin_15);
 	}
 }
@@ -157,10 +153,11 @@ int main()
 	xTaskCreate(LedFlash, (signed char *) "led2", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_13, tskIDLE_PRIORITY + 3, NULL);
 	blink(3, GPIOD, GPIO_Pin_13);
 
-	xQueue = xQueueCreate( 10, sizeof( unsigned char ) );
+	vSemaphoreCreateBinary(blue_sig);
 	xTaskCreate(BlueLedControl, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
 	blink(3, GPIOD, GPIO_Pin_15);
 
+	vSemaphoreCreateBinary(usb_rx_sig);
 	xTaskCreate(USBCdcTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 	blink(3, GPIOD, GPIO_Pin_14);
 
