@@ -20,7 +20,7 @@
  */
 
 #include "usbd_cdc_vcp.h"
-#include "stm32f4xx_conf.h"
+#include "usb_sys_glue.h"
 
 LINE_CODING linecoding = {
 	115200,	/* baud rate*/
@@ -28,10 +28,6 @@ LINE_CODING linecoding = {
 	0x00,	/* parity - none*/
 	0x08	/* nb. of bits 8*/
 };
-
-USART_InitTypeDef USART_InitStructure;
-
-/* These are external variables imported from CDC core to be used for IN transfer management */
 
 /*
    Write CDC received data in this buffer.
@@ -178,6 +174,7 @@ uint32_t APP_tx_ptr_tail;
 
 static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 {
+	uint16_t ret = USBD_OK;
 	uint32_t i;
 
 	for (i = 0; i < Len; i++) {
@@ -186,11 +183,15 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 		if (APP_tx_ptr_head == APP_TX_BUF_SIZE)
 			APP_tx_ptr_head = 0;
 
-		if (APP_tx_ptr_head == APP_tx_ptr_tail)
-			return USBD_FAIL;
+		if (APP_tx_ptr_head == APP_tx_ptr_tail) {
+			ret = USBD_FAIL;
+			break;
+		}
 	}
 
-	return USBD_OK;
+	usb_rx_notify();
+
+	return ret;
 }
 
 int VCP_get_char(uint8_t *buf)
@@ -243,9 +244,4 @@ int VCP_get_string(uint8_t *buf)
 	if (APP_tx_ptr_tail >= APP_TX_BUF_SIZE)
 		APP_tx_ptr_tail -= APP_TX_BUF_SIZE;
 	return i;
-}
-
-void EVAL_COM_IRQHandler(void)
-{
-
 }

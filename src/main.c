@@ -10,6 +10,7 @@
 #include "task.h"
 
 #include "usbd_cdc_core.h"
+#include "usbd_cdc_vcp.h"
 #include "usbd_desc.h"
 #include "usbd_usr.h"
 #include "usb_conf.h"
@@ -96,49 +97,41 @@ static void hw_init(void)
 
 static void LedFlash(void *Parameters)
 {
-	uint16_t pin = (uint16_t) Parameters;
-	uint32_t num = pin >> 12;
-
 	portTickType LastWake;
 
 	LastWake = xTaskGetTickCount();
 
-	GPIO_SetBits(GPIOD, pin);
+	GPIO_SetBits(GPIOD, GPIO_Pin_12);
 
 	while(1) {
-		GPIO_ToggleBits(GPIOD, pin);
-		vTaskDelayUntil(&LastWake, num*100);
+		GPIO_ToggleBits(GPIOD, GPIO_Pin_12);
+		vTaskDelayUntil(&LastWake, 500);
 	}
 }
 
-static void USBCdcTask(void *Parameters)
+static void VcpEchoTask(void *Parameters)
 {
-	uint8_t buf[128];
-	uint8_t len;
+	uint8_t ch;
 
-	portTickType LastWake;
-
-	GPIO_SetBits(GPIOD, GPIO_Pin_14);
-
-	LastWake = xTaskGetTickCount();
+	GPIO_ResetBits(GPIOD, GPIO_Pin_13);
 
 	while(1) {
-		len = VCP_get_string(&buf[0]);
-		if (len) {
-			VCP_send_str(&buf[0]);
+		xSemaphoreTake(usb_rx_sig, portMAX_DELAY);
+		while (VCP_get_char(&ch)) {
+			VCP_put_char(ch);
 		}
-		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
-		vTaskDelayUntil(&LastWake, 1000);
+
+		GPIO_ToggleBits(GPIOD, GPIO_Pin_13);
 	}
 }
 
 static void BlueLedControl(void *Parameters)
 {
-	GPIO_SetBits(GPIOD, GPIO_Pin_15);
+	GPIO_SetBits(GPIOD, GPIO_Pin_14);
 
 	while(1) {
 		xSemaphoreTake(blue_sig, portMAX_DELAY);
-		GPIO_ToggleBits(GPIOD, GPIO_Pin_15);
+		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
 	}
 }
 
@@ -147,19 +140,13 @@ int main()
 	hw_init();
 	blink(5, GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
 
-	xTaskCreate(LedFlash, (signed char *) "led1", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_12, tskIDLE_PRIORITY + 2, NULL);
-	blink(3, GPIOD, GPIO_Pin_12);
-
-	xTaskCreate(LedFlash, (signed char *) "led2", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_13, tskIDLE_PRIORITY + 3, NULL);
-	blink(3, GPIOD, GPIO_Pin_13);
+	xTaskCreate(LedFlash, (signed char *) "led", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 2, NULL);
 
 	vSemaphoreCreateBinary(blue_sig);
 	xTaskCreate(BlueLedControl, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
-	blink(3, GPIOD, GPIO_Pin_15);
 
 	vSemaphoreCreateBinary(usb_rx_sig);
-	xTaskCreate(USBCdcTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-	blink(3, GPIOD, GPIO_Pin_14);
+	xTaskCreate(VcpEchoTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 
 	vTaskStartScheduler();
 

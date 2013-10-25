@@ -22,14 +22,10 @@
 #ifndef __USBD_CONF__H__
 #define __USBD_CONF__H__
 
-
-#include   "stm32f4_discovery.h"
-
 #define USBD_CFG_MAX_NUM		1
 #define USBD_ITF_MAX_NUM		1
-#define USB_MAX_STR_DESC_SIZ	50
 
-#define USBD_DYNAMIC_DESCRIPTOR_CHANGE_ENABLED
+#define USB_MAX_STR_DESC_SIZ	255
 
 #define CDC_IN_EP		0x81
 #define CDC_OUT_EP		0x01

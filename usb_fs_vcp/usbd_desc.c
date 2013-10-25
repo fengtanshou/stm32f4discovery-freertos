@@ -26,7 +26,7 @@
 #include "usb_regs.h"
 
 #define USBD_VID                     0x0483
-#define USBD_PID                     0x5710
+#define USBD_PID                     0x5740
 
 #define USBD_LANGID_STRING            0x409
 #define USBD_MANUFACTURER_STRING      "STMicroelectronics"
@@ -61,7 +61,7 @@ __ALIGN_BEGIN uint8_t USBD_DeviceDesc[USB_SIZ_DEVICE_DESC] __ALIGN_END =
 	USB_DEVICE_DESCRIPTOR_TYPE, /*bDescriptorType*/
 	0x00,                       /*bcdUSB */
 	0x02,
-	0x00,                       /*bDeviceClass*/
+	0x02,                       /*bDeviceClass*/
 	0x00,                       /*bDeviceSubClass*/
 	0x00,                       /*bDeviceProtocol*/
 	USB_OTG_MAX_EP0_SIZE,      /*bMaxPacketSize*/

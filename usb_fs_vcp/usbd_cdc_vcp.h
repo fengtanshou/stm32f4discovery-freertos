@@ -22,10 +22,6 @@
 #ifndef __USBD_CDC_VCP_H
 #define __USBD_CDC_VCP_H
 
-#include <stdint.h>
-
-#include "stm32f4xx_conf.h"
-
 #include "usbd_cdc_core.h"
 #include "usbd_conf.h"
 
@@ -35,12 +31,6 @@ typedef struct {
 	uint8_t  paritytype;
 	uint8_t  datatype;
 } LINE_CODING;
-
-#ifdef USE_STM322xG_EVAL
-#define EVAL_COM_IRQHandler            USART3_IRQHandler
-#elif defined(USE_STM3210C_EVAL)
-#define EVAL_COM_IRQHandler            USART2_IRQHandler
-#endif /* USE_STM322xG_EVAL */
 
 void VCP_put_char(uint8_t buf);
 void VCP_send_str(uint8_t* buf);

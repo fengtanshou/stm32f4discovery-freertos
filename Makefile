@@ -105,7 +105,8 @@ DEMO_SRCS += \
 	usb_fs_vcp/usb_bsp.c \
 	usb_fs_vcp/usbd_usr.c \
 	usb_fs_vcp/usbd_desc.c \
-	usb_fs_vcp/usbd_cdc_vcp.c
+	usb_fs_vcp/usbd_cdc_vcp.c \
+	usb_fs_vcp/usb_sys_glue.c
 
 #
 

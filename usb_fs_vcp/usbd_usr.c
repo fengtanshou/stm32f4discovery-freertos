@@ -22,6 +22,8 @@
 #include "usbd_usr.h"
 #include "usbd_ioreq.h"
 
+#include "usb_sys_glue.h"
+
 USBD_Usr_cb_TypeDef USR_cb =
 {
 	USBD_USR_Init,
@@ -60,12 +62,12 @@ void USBD_USR_DeviceConfigured (void)
 
 void USBD_USR_DeviceConnected (void)
 {
-
+	usb_connect_notify();
 }
 
 void USBD_USR_DeviceDisconnected (void)
 {
-
+	usb_disconnect_notify();
 }
 
 void USBD_USR_DeviceSuspended(void)
