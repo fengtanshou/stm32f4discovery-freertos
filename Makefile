@@ -43,6 +43,7 @@ DEMO_SRCS += \
 	src/stdlib.c \
 	src/stubs.c \
 	src/misc.c \
+	src/tim2.c \
 	src/isr.c
 
 # ST common BSP
@@ -64,6 +65,7 @@ DEMO_SRCS += \
 	$(STM_DIR)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_i2c.c \
 	$(STM_DIR)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dma.c \
 	$(STM_DIR)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dac.c \
+	$(STM_DIR)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_tim.c \
 	$(STM_DIR)/Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c
 
 # FreeRTOS

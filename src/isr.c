@@ -42,3 +42,8 @@ void OTG_FS_IRQHandler(void)
 {
 	USBD_OTG_ISR_Handler(&USB_OTG_dev);
 }
+
+void TIM2_IRQHandler(void)
+{
+	timer_tim2_irq();
+}

@@ -15,6 +15,8 @@
 #include "usbd_usr.h"
 #include "usb_conf.h"
 
+#include "tim2.h"
+
 __ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 
 GPIO_InitTypeDef gpio_init;
@@ -77,6 +79,10 @@ static void hw_init(void)
 	nvic_init.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&nvic_init);
 
+	/* Enable TIM2 */
+
+	timer_tim2_init();
+
 	/* Enable USB device */
 
 	USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_CDC_cb, &USR_cb);
@@ -118,7 +124,12 @@ static void VcpEchoTask(void *Parameters)
 	while(1) {
 		xSemaphoreTake(usb_rx_sig, portMAX_DELAY);
 		while (VCP_get_char(&ch)) {
-			VCP_put_char(ch);
+			if (ch == '\r') {
+				VCP_put_char('\n');
+				VCP_put_char('\r');
+			} else {
+				VCP_put_char(ch);
+			}
 		}
 
 		GPIO_ToggleBits(GPIOD, GPIO_Pin_13);
@@ -132,6 +143,7 @@ static void BlueLedControl(void *Parameters)
 	while(1) {
 		xSemaphoreTake(blue_sig, portMAX_DELAY);
 		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
+		VCP_send_str("hello\n\r\0");
 	}
 }
 

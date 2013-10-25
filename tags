@@ -6,40 +6,27 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 AHBPrescTable	src/system_stm32f4xx.c	/^__I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};$/;"	v
 APP_FOPS	usb_fs_vcp/usbd_conf.h	39;"	d
-APP_FOPS	usb_fs_vcp/usbd_conf.h	43;"	d
 APP_RX_DATA_SIZE	usb_fs_vcp/usbd_conf.h	37;"	d
-APP_RX_DATA_SIZE	usb_fs_vcp/usbd_conf.h	41;"	d
 APP_TX_BUF_SIZE	usb_fs_vcp/usbd_cdc_vcp.c	169;"	d	file:
-APP_TX_BUF_SIZE	usb_fs_vcp/usbd_cdc_vcp.c	173;"	d	file:
 APP_Tx_Buffer	usb_fs_vcp/usbd_cdc_vcp.c	/^uint8_t APP_Tx_Buffer[APP_TX_BUF_SIZE];$/;"	v
 APP_tx_ptr_head	usb_fs_vcp/usbd_cdc_vcp.c	/^uint32_t APP_tx_ptr_head;$/;"	v
 APP_tx_ptr_tail	usb_fs_vcp/usbd_cdc_vcp.c	/^uint32_t APP_tx_ptr_tail;$/;"	v
 BlueLedControl	src/main.c	/^static void BlueLedControl(void *Parameters)$/;"	f	file:
 CC	Makefile	/^CC = $(CROSS_COMPILE)gcc$/;"	m
 CDC_CMD_EP	usb_fs_vcp/usbd_conf.h	32;"	d
-CDC_CMD_EP	usb_fs_vcp/usbd_conf.h	36;"	d
 CDC_CMD_PACKET_SZE	usb_fs_vcp/usbd_conf.h	35;"	d
-CDC_CMD_PACKET_SZE	usb_fs_vcp/usbd_conf.h	39;"	d
 CDC_DATA_MAX_PACKET_SIZE	usb_fs_vcp/usbd_conf.h	34;"	d
-CDC_DATA_MAX_PACKET_SIZE	usb_fs_vcp/usbd_conf.h	38;"	d
 CDC_IN_EP	usb_fs_vcp/usbd_conf.h	30;"	d
-CDC_IN_EP	usb_fs_vcp/usbd_conf.h	34;"	d
 CDC_IN_FRAME_INTERVAL	usb_fs_vcp/usbd_conf.h	36;"	d
-CDC_IN_FRAME_INTERVAL	usb_fs_vcp/usbd_conf.h	40;"	d
 CDC_OUT_EP	usb_fs_vcp/usbd_conf.h	31;"	d
-CDC_OUT_EP	usb_fs_vcp/usbd_conf.h	35;"	d
 CFLAGS	Makefile	/^CFLAGS = -g -Wall -O2$/;"	m
 CROSS_COMPILE	Makefile	/^CROSS_COMPILE ?= \/home\/matsi\/devel\/tools\/Sourcery_CodeBench_Lite_for_ARM_GNU_Linux-2013.05-24\/bin\/arm-none-linux-gnueabi-$/;"	m
 CopyDataInit	src/startup_stm32f4xx.s	/^CopyDataInit:$/;"	l
 DEFAULT_CONFIG	usb_fs_vcp/usbd_cdc_vcp.h	41;"	d
-DEFAULT_CONFIG	usb_fs_vcp/usbd_cdc_vcp.h	51;"	d
 DEMO_OBJS	Makefile	/^DEMO_OBJS := $(DEMO_OBJS:.s=.o)$/;"	m
 DEMO_OBJS	Makefile	/^DEMO_OBJS := $(DEMO_SRCS:.c=.o)$/;"	m
 DEMO_OBJS	Makefile	/^DEMO_OBJS := $(addprefix $(OBJ_DIR)\/,$(DEMO_OBJS))$/;"	m
 Default_Handler	src/startup_stm32f4xx.s	/^Default_Handler:$/;"	l
-EVAL_COM_IRQHandler	usb_fs_vcp/usbd_cdc_vcp.c	/^void EVAL_COM_IRQHandler(void)$/;"	f
-EVAL_COM_IRQHandler	usb_fs_vcp/usbd_cdc_vcp.h	40;"	d
-EVAL_COM_IRQHandler	usb_fs_vcp/usbd_cdc_vcp.h	42;"	d
 EXTI0_IRQHandler	src/isr.c	/^void EXTI0_IRQHandler(void)$/;"	f
 FREERTOS_CONFIG_H	include/FreeRTOSConfig.h	71;"	d
 FREERTOS_DIR	Makefile	/^FREERTOS_DIR ?= \/home\/matsi\/code\/FreeRTOSV7.3.0\/FreeRTOS$/;"	m
@@ -68,13 +55,11 @@ OBJ_DIR	Makefile	/^OBJ_DIR = build$/;"	m
 OTG_FS_IRQHandler	src/isr.c	/^void OTG_FS_IRQHandler(void)$/;"	f
 OTG_FS_WKUP_IRQHandler	src/isr.c	/^void OTG_FS_WKUP_IRQHandler(void)$/;"	f
 OTHER_CONFIG	usb_fs_vcp/usbd_cdc_vcp.h	42;"	d
-OTHER_CONFIG	usb_fs_vcp/usbd_cdc_vcp.h	52;"	d
 PLL_M	src/system_stm32f4xx.c	112;"	d	file:
 PLL_N	src/system_stm32f4xx.c	113;"	d	file:
 PLL_P	src/system_stm32f4xx.c	116;"	d	file:
 PLL_Q	src/system_stm32f4xx.c	119;"	d	file:
 RX_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	30;"	d
-RX_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	62;"	d
 Reset_Handler	src/startup_stm32f4xx.s	/^Reset_Handler:$/;"	l
 SRC_DIR	Makefile	/^SRC_DIR = src$/;"	m
 STM_DIR	Makefile	/^STM_DIR ?= \/home\/matsi\/src\/stm32\/STM32F4-Discovery_FW_V1.1.0$/;"	m
@@ -83,29 +68,19 @@ SystemCoreClock	src/system_stm32f4xx.c	/^uint32_t SystemCoreClock = 168000000;$/
 SystemCoreClockUpdate	src/system_stm32f4xx.c	/^void SystemCoreClockUpdate(void)$/;"	f
 SystemInit	src/system_stm32f4xx.c	/^void SystemInit(void)$/;"	f
 TARGET	Makefile	/^TARGET=freertos-demo$/;"	m
+TIM2_IRQHandler	src/isr.c	/^void TIM2_IRQHandler(void)$/;"	f
 TIM_MSEC_DELAY	include/tim2.h	7;"	d
 TIM_USEC_DELAY	include/tim2.h	8;"	d
 TX0_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	31;"	d
-TX0_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	63;"	d
 TX1_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	32;"	d
-TX1_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	64;"	d
 TX2_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	33;"	d
-TX2_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	65;"	d
 TX3_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	34;"	d
-TX3_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	66;"	d
-TXH_NP_FS_FIFOSIZ	usb_fs_vcp/usb_conf.h	67;"	d
-TXH_P_FS_FIFOSIZ	usb_fs_vcp/usb_conf.h	68;"	d
-USART_InitStructure	usb_fs_vcp/usbd_cdc_vcp.c	/^USART_InitTypeDef USART_InitStructure;$/;"	v
-USBCdcTask	src/main.c	/^static void USBCdcTask(void *Parameters)$/;"	f	file:
 USBD_CFG_MAX_NUM	usb_fs_vcp/usbd_conf.h	25;"	d
-USBD_CFG_MAX_NUM	usb_fs_vcp/usbd_conf.h	28;"	d
 USBD_CONFIGURATION_FS_STRING	usb_fs_vcp/usbd_desc.c	43;"	d	file:
 USBD_CONFIGURATION_HS_STRING	usb_fs_vcp/usbd_desc.c	40;"	d	file:
-USBD_DYNAMIC_DESCRIPTOR_CHANGE_ENABLED	usb_fs_vcp/usbd_conf.h	32;"	d
 USBD_INTERFACE_FS_STRING	usb_fs_vcp/usbd_desc.c	44;"	d	file:
 USBD_INTERFACE_HS_STRING	usb_fs_vcp/usbd_desc.c	41;"	d	file:
 USBD_ITF_MAX_NUM	usb_fs_vcp/usbd_conf.h	26;"	d
-USBD_ITF_MAX_NUM	usb_fs_vcp/usbd_conf.h	29;"	d
 USBD_LANGID_STRING	usb_fs_vcp/usbd_desc.c	31;"	d	file:
 USBD_MANUFACTURER_STRING	usb_fs_vcp/usbd_desc.c	32;"	d	file:
 USBD_PID	usb_fs_vcp/usbd_desc.c	29;"	d	file:
@@ -133,7 +108,6 @@ USB_DEVICE_DESCRIPTOR_TYPE	usb_fs_vcp/usbd_desc.h	27;"	d
 USB_ENDPOINT_DESCRIPTOR_TYPE	usb_fs_vcp/usbd_desc.h	31;"	d
 USB_INTERFACE_DESCRIPTOR_TYPE	usb_fs_vcp/usbd_desc.h	30;"	d
 USB_MAX_STR_DESC_SIZ	usb_fs_vcp/usbd_conf.h	28;"	d
-USB_MAX_STR_DESC_SIZ	usb_fs_vcp/usbd_conf.h	30;"	d
 USB_OTG_BSP_EnableInterrupt	usb_fs_vcp/usb_bsp.c	/^void USB_OTG_BSP_EnableInterrupt(USB_OTG_CORE_HANDLE *pdev)$/;"	f
 USB_OTG_BSP_Init	usb_fs_vcp/usb_bsp.c	/^void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)$/;"	f
 USB_OTG_BSP_mDelay	usb_fs_vcp/usb_bsp.c	/^void USB_OTG_BSP_mDelay (const uint32_t msec)$/;"	f
@@ -143,7 +117,6 @@ USB_SIZ_DEVICE_DESC	usb_fs_vcp/usbd_desc.h	32;"	d
 USB_SIZ_STRING_LANGID	usb_fs_vcp/usbd_desc.h	33;"	d
 USB_STRING_DESCRIPTOR_TYPE	usb_fs_vcp/usbd_desc.h	29;"	d
 USE_DEVICE_MODE	usb_fs_vcp/usb_conf.h	40;"	d
-USE_DEVICE_MODE	usb_fs_vcp/usb_conf.h	73;"	d
 USE_USB_OTG_FS	usb_fs_vcp/usb_conf.h	27;"	d
 USR_cb	usb_fs_vcp/usbd_usr.c	/^USBD_Usr_cb_TypeDef USR_cb =$/;"	v
 USR_desc	usb_fs_vcp/usbd_desc.c	/^USBD_DEVICE USR_desc =$/;"	v
@@ -166,18 +139,10 @@ __ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	51;"	d
 __ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	53;"	d
 __ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	55;"	d
 __ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	59;"	d
-__ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	80;"	d
-__ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	84;"	d
-__ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	86;"	d
-__ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	88;"	d
-__ALIGN_BEGIN	usb_fs_vcp/usb_conf.h	92;"	d
 __ALIGN_END	src/main.c	/^__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;$/;"	v
 __ALIGN_END	usb_fs_vcp/usb_conf.h	46;"	d
 __ALIGN_END	usb_fs_vcp/usb_conf.h	49;"	d
 __ALIGN_END	usb_fs_vcp/usb_conf.h	60;"	d
-__ALIGN_END	usb_fs_vcp/usb_conf.h	79;"	d
-__ALIGN_END	usb_fs_vcp/usb_conf.h	82;"	d
-__ALIGN_END	usb_fs_vcp/usb_conf.h	93;"	d
 __ALIGN_END	usb_fs_vcp/usbd_desc.c	/^__ALIGN_BEGIN uint8_t USBD_DeviceDesc[USB_SIZ_DEVICE_DESC] __ALIGN_END =$/;"	v
 __ALIGN_END	usb_fs_vcp/usbd_desc.c	/^__ALIGN_BEGIN uint8_t USBD_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_DESC] __ALIGN_END =$/;"	v
 __ALIGN_END	usb_fs_vcp/usbd_desc.c	/^__ALIGN_BEGIN uint8_t USBD_LangIDDesc[USB_SIZ_STRING_LANGID] __ALIGN_END =$/;"	v
@@ -191,14 +156,10 @@ __USB_SYS_GLUE_H	usb_fs_vcp/usb_sys_glue.h	2;"	d
 __aeabi_unwind_cpp_pr0	src/stubs.c	/^void __aeabi_unwind_cpp_pr0(void)$/;"	f
 __aeabi_unwind_cpp_pr1	src/stubs.c	/^void __aeabi_unwind_cpp_pr1(void)$/;"	f
 __libc_init_array	src/stubs.c	/^void __libc_init_array(void)$/;"	f
-__packed	usb_fs_vcp/usb_conf.h	101;"	d
-__packed	usb_fs_vcp/usb_conf.h	103;"	d
 __packed	usb_fs_vcp/usb_conf.h	64;"	d
 __packed	usb_fs_vcp/usb_conf.h	66;"	d
 __packed	usb_fs_vcp/usb_conf.h	68;"	d
 __packed	usb_fs_vcp/usb_conf.h	70;"	d
-__packed	usb_fs_vcp/usb_conf.h	97;"	d
-__packed	usb_fs_vcp/usb_conf.h	99;"	d
 assert_param	include/stm32f4xx_conf.h	85;"	d
 assert_param	include/stm32f4xx_conf.h	89;"	d
 bitrate	usb_fs_vcp/usbd_cdc_vcp.h	/^	uint32_t bitrate;$/;"	m	struct:__anon1
