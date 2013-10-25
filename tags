@@ -5,6 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 AHBPrescTable	src/system_stm32f4xx.c	/^__I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};$/;"	v
+BlueLedControl	src/main.c	/^static void BlueLedControl(void *Parameters)$/;"	f	file:
 CC	Makefile	/^CC = $(CROSS_COMPILE)gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS = -g -Wall -O2$/;"	m
 CROSS_COMPILE	Makefile	/^CROSS_COMPILE ?= \/home\/matsi\/devel\/tools\/Sourcery_CodeBench_Lite_for_ARM_GNU_Linux-2013.05-24\/bin\/arm-none-linux-gnueabi-$/;"	m
@@ -17,8 +18,13 @@ EXTI0_IRQHandler	src/isr.c	/^void EXTI0_IRQHandler(void)$/;"	f
 FREERTOS_CONFIG_H	include/FreeRTOSConfig.h	71;"	d
 FREERTOS_DIR	Makefile	/^FREERTOS_DIR ?= \/home\/matsi\/code\/FreeRTOSV7.3.0\/FreeRTOS$/;"	m
 FillZerobss	src/startup_stm32f4xx.s	/^FillZerobss:$/;"	l
+HID_IN_EP	usb_fs_hid/usbd_conf.h	30;"	d
+HID_IN_PACKET	usb_fs_hid/usbd_conf.h	33;"	d
+HID_OUT_EP	usb_fs_hid/usbd_conf.h	31;"	d
+HID_OUT_PACKET	usb_fs_hid/usbd_conf.h	34;"	d
 HSE_VALUE	include/stm32f4xx_conf.h	28;"	d
 HSE_VALUE	include/stm32f4xx_conf.h	29;"	d
+INCLUDE_eTaskStateGet	include/FreeRTOSConfig.h	130;"	d
 INCLUDE_uxTaskPriorityGet	include/FreeRTOSConfig.h	124;"	d
 INCLUDE_vTaskCleanUpResources	include/FreeRTOSConfig.h	126;"	d
 INCLUDE_vTaskDelay	include/FreeRTOSConfig.h	129;"	d
@@ -36,41 +42,116 @@ LoopCopyDataInit	src/startup_stm32f4xx.s	/^LoopCopyDataInit:$/;"	l
 LoopFillZerobss	src/startup_stm32f4xx.s	/^LoopFillZerobss:$/;"	l
 OBJCOPY	Makefile	/^OBJCOPY = $(CROSS_COMPILE)objcopy$/;"	m
 OBJ_DIR	Makefile	/^OBJ_DIR = build$/;"	m
+OTG_FS_IRQHandler	src/isr.c	/^void OTG_FS_IRQHandler(void)$/;"	f
+OTG_FS_WKUP_IRQHandler	src/isr.c	/^void OTG_FS_WKUP_IRQHandler(void)$/;"	f
 PLL_M	src/system_stm32f4xx.c	112;"	d	file:
 PLL_N	src/system_stm32f4xx.c	113;"	d	file:
 PLL_P	src/system_stm32f4xx.c	116;"	d	file:
 PLL_Q	src/system_stm32f4xx.c	119;"	d	file:
+RX_FIFO_FS_SIZE	usb_fs_hid/usb_conf.h	30;"	d
 Reset_Handler	src/startup_stm32f4xx.s	/^Reset_Handler:$/;"	l
 SRC_DIR	Makefile	/^SRC_DIR = src$/;"	m
-STM_DIR	Makefile	/^STM_DIR ?= \/home\/matsi\/src\/stm32\/STM32F4-Discovery_FW_V1.1.0\/Libraries$/;"	m
+STM_DIR	Makefile	/^STM_DIR ?= \/home\/matsi\/src\/stm32\/STM32F4-Discovery_FW_V1.1.0$/;"	m
 SetSysClock	src/system_stm32f4xx.c	/^static void SetSysClock(void)$/;"	f	file:
 SystemCoreClock	src/system_stm32f4xx.c	/^uint32_t SystemCoreClock = 168000000;$/;"	v
 SystemCoreClockUpdate	src/system_stm32f4xx.c	/^void SystemCoreClockUpdate(void)$/;"	f
 SystemInit	src/system_stm32f4xx.c	/^void SystemInit(void)$/;"	f
 TARGET	Makefile	/^TARGET=freertos-demo$/;"	m
+TX0_FIFO_FS_SIZE	usb_fs_hid/usb_conf.h	31;"	d
+TX1_FIFO_FS_SIZE	usb_fs_hid/usb_conf.h	32;"	d
+TX2_FIFO_FS_SIZE	usb_fs_hid/usb_conf.h	33;"	d
+TX3_FIFO_FS_SIZE	usb_fs_hid/usb_conf.h	34;"	d
+USBD_CFG_MAX_NUM	usb_fs_hid/usbd_conf.h	25;"	d
+USBD_CONFIGURATION_FS_STRING	usb_fs_hid/usbd_desc.c	43;"	d	file:
+USBD_CONFIGURATION_HS_STRING	usb_fs_hid/usbd_desc.c	40;"	d	file:
+USBD_INTERFACE_FS_STRING	usb_fs_hid/usbd_desc.c	44;"	d	file:
+USBD_INTERFACE_HS_STRING	usb_fs_hid/usbd_desc.c	41;"	d	file:
+USBD_ITF_MAX_NUM	usb_fs_hid/usbd_conf.h	26;"	d
+USBD_LANGID_STRING	usb_fs_hid/usbd_desc.c	31;"	d	file:
+USBD_MANUFACTURER_STRING	usb_fs_hid/usbd_desc.c	32;"	d	file:
+USBD_PID	usb_fs_hid/usbd_desc.c	29;"	d	file:
+USBD_PRODUCT_FS_STRING	usb_fs_hid/usbd_desc.c	37;"	d	file:
+USBD_PRODUCT_HS_STRING	usb_fs_hid/usbd_desc.c	34;"	d	file:
+USBD_SERIALNUMBER_FS_STRING	usb_fs_hid/usbd_desc.c	38;"	d	file:
+USBD_SERIALNUMBER_HS_STRING	usb_fs_hid/usbd_desc.c	35;"	d	file:
+USBD_USR_ConfigStrDescriptor	usb_fs_hid/usbd_desc.c	/^uint8_t * USBD_USR_ConfigStrDescriptor( uint8_t speed , uint16_t *length)$/;"	f
+USBD_USR_DeviceConfigured	usb_fs_hid/usbd_usr.c	/^void USBD_USR_DeviceConfigured (void)$/;"	f
+USBD_USR_DeviceConnected	usb_fs_hid/usbd_usr.c	/^void USBD_USR_DeviceConnected (void)$/;"	f
+USBD_USR_DeviceDescriptor	usb_fs_hid/usbd_desc.c	/^uint8_t * USBD_USR_DeviceDescriptor( uint8_t speed , uint16_t *length)$/;"	f
+USBD_USR_DeviceDisconnected	usb_fs_hid/usbd_usr.c	/^void USBD_USR_DeviceDisconnected (void)$/;"	f
+USBD_USR_DeviceReset	usb_fs_hid/usbd_usr.c	/^void USBD_USR_DeviceReset(uint8_t speed )$/;"	f
+USBD_USR_DeviceResumed	usb_fs_hid/usbd_usr.c	/^void USBD_USR_DeviceResumed(void)$/;"	f
+USBD_USR_DeviceSuspended	usb_fs_hid/usbd_usr.c	/^void USBD_USR_DeviceSuspended(void)$/;"	f
+USBD_USR_Init	usb_fs_hid/usbd_usr.c	/^void USBD_USR_Init(void)$/;"	f
+USBD_USR_InterfaceStrDescriptor	usb_fs_hid/usbd_desc.c	/^uint8_t * USBD_USR_InterfaceStrDescriptor( uint8_t speed , uint16_t *length)$/;"	f
+USBD_USR_LangIDStrDescriptor	usb_fs_hid/usbd_desc.c	/^uint8_t * USBD_USR_LangIDStrDescriptor( uint8_t speed , uint16_t *length)$/;"	f
+USBD_USR_ManufacturerStrDescriptor	usb_fs_hid/usbd_desc.c	/^uint8_t * USBD_USR_ManufacturerStrDescriptor( uint8_t speed , uint16_t *length)$/;"	f
+USBD_USR_ProductStrDescriptor	usb_fs_hid/usbd_desc.c	/^uint8_t * USBD_USR_ProductStrDescriptor( uint8_t speed , uint16_t *length)$/;"	f
+USBD_USR_SerialStrDescriptor	usb_fs_hid/usbd_desc.c	/^uint8_t * USBD_USR_SerialStrDescriptor( uint8_t speed , uint16_t *length)$/;"	f
+USBD_VID	usb_fs_hid/usbd_desc.c	28;"	d	file:
+USBHidTask	src/main.c	/^static void USBHidTask(void *Parameters)$/;"	f	file:
+USB_CONFIGURATION_DESCRIPTOR_TYPE	usb_fs_hid/usbd_desc.h	28;"	d
+USB_DEVICE_DESCRIPTOR_TYPE	usb_fs_hid/usbd_desc.h	27;"	d
+USB_ENDPOINT_DESCRIPTOR_TYPE	usb_fs_hid/usbd_desc.h	31;"	d
+USB_INTERFACE_DESCRIPTOR_TYPE	usb_fs_hid/usbd_desc.h	30;"	d
+USB_MAX_STR_DESC_SIZ	usb_fs_hid/usbd_conf.h	28;"	d
+USB_OTG_BSP_EnableInterrupt	usb_fs_hid/usb_bsp.c	/^void USB_OTG_BSP_EnableInterrupt(USB_OTG_CORE_HANDLE *pdev)$/;"	f
+USB_OTG_BSP_Init	usb_fs_hid/usb_bsp.c	/^void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)$/;"	f
+USB_OTG_BSP_mDelay	usb_fs_hid/usb_bsp.c	/^void USB_OTG_BSP_mDelay (const uint32_t msec)$/;"	f
+USB_OTG_BSP_uDelay	usb_fs_hid/usb_bsp.c	/^void USB_OTG_BSP_uDelay (const uint32_t usec)$/;"	f
+USB_OTG_FS_CORE	usb_fs_hid/usb_conf.h	28;"	d
+USB_SIZ_DEVICE_DESC	usb_fs_hid/usbd_desc.h	32;"	d
+USB_SIZ_STRING_LANGID	usb_fs_hid/usbd_desc.h	33;"	d
+USB_STRING_DESCRIPTOR_TYPE	usb_fs_hid/usbd_desc.h	29;"	d
+USE_DEVICE_MODE	usb_fs_hid/usb_conf.h	40;"	d
+USE_USB_OTG_FS	usb_fs_hid/usb_conf.h	27;"	d
+USR_cb	usb_fs_hid/usbd_usr.c	/^USBD_Usr_cb_TypeDef USR_cb =$/;"	v
+USR_desc	usb_fs_hid/usbd_desc.c	/^USBD_DEVICE USR_desc =$/;"	v
+VBUS_SENSING_ENABLED	usb_fs_hid/usb_conf.h	38;"	d
 VECT_TAB_OFFSET	src/system_stm32f4xx.c	107;"	d	file:
+__ALIGN_BEGIN	usb_fs_hid/usb_conf.h	47;"	d
+__ALIGN_BEGIN	usb_fs_hid/usb_conf.h	51;"	d
+__ALIGN_BEGIN	usb_fs_hid/usb_conf.h	53;"	d
+__ALIGN_BEGIN	usb_fs_hid/usb_conf.h	55;"	d
+__ALIGN_BEGIN	usb_fs_hid/usb_conf.h	59;"	d
+__ALIGN_END	src/main.c	/^__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;$/;"	v
+__ALIGN_END	usb_fs_hid/usb_conf.h	46;"	d
+__ALIGN_END	usb_fs_hid/usb_conf.h	49;"	d
+__ALIGN_END	usb_fs_hid/usb_conf.h	60;"	d
+__ALIGN_END	usb_fs_hid/usbd_desc.c	/^__ALIGN_BEGIN uint8_t USBD_DeviceDesc[USB_SIZ_DEVICE_DESC] __ALIGN_END =$/;"	v
+__ALIGN_END	usb_fs_hid/usbd_desc.c	/^__ALIGN_BEGIN uint8_t USBD_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_DESC] __ALIGN_END =$/;"	v
+__ALIGN_END	usb_fs_hid/usbd_desc.c	/^__ALIGN_BEGIN uint8_t USBD_LangIDDesc[USB_SIZ_STRING_LANGID] __ALIGN_END =$/;"	v
 __STM32F4xx_CONF_H	include/stm32f4xx_conf.h	24;"	d
+__USBD_CONF__H__	usb_fs_hid/usbd_conf.h	23;"	d
+__USB_CONF__H__	usb_fs_hid/usb_conf.h	23;"	d
+__USB_DESC_H	usb_fs_hid/usbd_desc.h	23;"	d
+__USB_SYS_GLUE_H	usb_fs_hid/usb_sys_glue.h	2;"	d
 __aeabi_unwind_cpp_pr0	src/stubs.c	/^void __aeabi_unwind_cpp_pr0(void)$/;"	f
 __aeabi_unwind_cpp_pr1	src/stubs.c	/^void __aeabi_unwind_cpp_pr1(void)$/;"	f
 __libc_init_array	src/stubs.c	/^void __libc_init_array(void)$/;"	f
+__packed	usb_fs_hid/usb_conf.h	64;"	d
+__packed	usb_fs_hid/usb_conf.h	66;"	d
+__packed	usb_fs_hid/usb_conf.h	68;"	d
+__packed	usb_fs_hid/usb_conf.h	70;"	d
 assert_param	include/stm32f4xx_conf.h	85;"	d
 assert_param	include/stm32f4xx_conf.h	89;"	d
 blink	src/misc.c	/^void blink(volatile int count, GPIO_TypeDef* GPIOx, uint16_t pin)$/;"	f
-configASSERT	include/FreeRTOSConfig.h	158;"	d
+blue_sig	src/main.c	/^xSemaphoreHandle blue_sig;$/;"	v
+configASSERT	include/FreeRTOSConfig.h	159;"	d
 configCHECK_FOR_STACK_OVERFLOW	include/FreeRTOSConfig.h	104;"	d
 configCPU_CLOCK_HZ	include/FreeRTOSConfig.h	92;"	d
 configGENERATE_RUN_TIME_STATS	include/FreeRTOSConfig.h	109;"	d
 configIDLE_SHOULD_YIELD	include/FreeRTOSConfig.h	100;"	d
-configKERNEL_INTERRUPT_PRIORITY	include/FreeRTOSConfig.h	151;"	d
-configLIBRARY_LOWEST_INTERRUPT_PRIORITY	include/FreeRTOSConfig.h	141;"	d
-configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY	include/FreeRTOSConfig.h	147;"	d
+configKERNEL_INTERRUPT_PRIORITY	include/FreeRTOSConfig.h	152;"	d
+configLIBRARY_LOWEST_INTERRUPT_PRIORITY	include/FreeRTOSConfig.h	142;"	d
+configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY	include/FreeRTOSConfig.h	148;"	d
 configMAX_CO_ROUTINE_PRIORITIES	include/FreeRTOSConfig.h	113;"	d
 configMAX_PRIORITIES	include/FreeRTOSConfig.h	94;"	d
-configMAX_SYSCALL_INTERRUPT_PRIORITY	include/FreeRTOSConfig.h	154;"	d
+configMAX_SYSCALL_INTERRUPT_PRIORITY	include/FreeRTOSConfig.h	155;"	d
 configMAX_TASK_NAME_LEN	include/FreeRTOSConfig.h	97;"	d
 configMINIMAL_STACK_SIZE	include/FreeRTOSConfig.h	95;"	d
-configPRIO_BITS	include/FreeRTOSConfig.h	134;"	d
-configPRIO_BITS	include/FreeRTOSConfig.h	136;"	d
+configPRIO_BITS	include/FreeRTOSConfig.h	135;"	d
+configPRIO_BITS	include/FreeRTOSConfig.h	137;"	d
 configQUEUE_REGISTRY_SIZE	include/FreeRTOSConfig.h	103;"	d
 configTICK_RATE_HZ	include/FreeRTOSConfig.h	93;"	d
 configTIMER_QUEUE_LENGTH	include/FreeRTOSConfig.h	118;"	d
@@ -106,6 +187,8 @@ strncat	src/stdlib.c	/^char * strncat(char *dest, const char *src, size_t n)$/;"
 strncpy	src/stdlib.c	/^char * strncpy(char *dest, const char *src, size_t n)$/;"	f
 u16_t	src/stdlib.c	/^typedef uint16_t u16_t;$/;"	t	file:
 u8_t	src/stdlib.c	/^typedef uint8_t u8_t;$/;"	t	file:
-vPortSVCHandler	include/FreeRTOSConfig.h	162;"	d
-xPortPendSVHandler	include/FreeRTOSConfig.h	163;"	d
-xPortSysTickHandler	include/FreeRTOSConfig.h	164;"	d
+usb_connect_notify	usb_fs_hid/usb_sys_glue.c	/^void usb_connect_notify(void)$/;"	f
+usb_disconnect_notify	usb_fs_hid/usb_sys_glue.c	/^void usb_disconnect_notify(void)$/;"	f
+vPortSVCHandler	include/FreeRTOSConfig.h	163;"	d
+xPortPendSVHandler	include/FreeRTOSConfig.h	164;"	d
+xPortSysTickHandler	include/FreeRTOSConfig.h	165;"	d

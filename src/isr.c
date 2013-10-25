@@ -1,7 +1,7 @@
 #include "stm32f4xx_conf.h"
 
 #include "FreeRTOS.h"
-#include "queue.h"
+#include "semphr.h"
 #include "task.h"
 
 #include "usbd_hid_core.h"
@@ -10,15 +10,16 @@
 #include "usb_conf.h"
 
 extern USB_OTG_CORE_HANDLE  USB_OTG_dev;
-extern xQueueHandle xQueue;
-
-unsigned char c = 'E';
+extern xSemaphoreHandle blue_sig;
 
 void EXTI0_IRQHandler(void)
 {
+	signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+
 	if(EXTI_GetITStatus(EXTI_Line0) != RESET)
 	{
-		xQueueSendToFrontFromISR(xQueue, &c, NULL);
+		xSemaphoreGiveFromISR(blue_sig, &xHigherPriorityTaskWoken);
+		portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
 
 		/* Clear the EXTI line 0 pending bit */
 		EXTI_ClearITPendingBit(EXTI_Line0);

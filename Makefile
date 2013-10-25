@@ -104,7 +104,8 @@ CFLAGS += -Iusb_fs_hid
 DEMO_SRCS += \
 	usb_fs_hid/usb_bsp.c \
 	usb_fs_hid/usbd_usr.c \
-	usb_fs_hid/usbd_desc.c
+	usb_fs_hid/usbd_desc.c \
+	usb_fs_hid/usb_sys_glue.c
 
 #
 

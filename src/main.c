@@ -6,7 +6,7 @@
 
 #include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
-#include "queue.h"
+#include "semphr.h"
 #include "task.h"
 
 #include "usbd_hid_core.h"
@@ -20,7 +20,7 @@ GPIO_InitTypeDef gpio_init;
 NVIC_InitTypeDef nvic_init;
 EXTI_InitTypeDef exti_init;
 
-xQueueHandle xQueue;
+xSemaphoreHandle blue_sig;
 
 static void hw_init(void)
 {
@@ -115,7 +115,7 @@ static void USBHidTask(void *Parameters)
 	uint8_t hid_buffer[4] = {0};
 	portTickType LastWake;
 
-	GPIO_SetBits(GPIOD, GPIO_Pin_14);
+	GPIO_SetBits(GPIOD, GPIO_Pin_13);
 
 	LastWake = xTaskGetTickCount();
 
@@ -124,23 +124,22 @@ static void USBHidTask(void *Parameters)
 		hid_buffer[1] += 1;
 
 		USBD_HID_SendReport(&USB_OTG_dev, hid_buffer, 4);
-		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
-		vTaskDelayUntil(&LastWake, 3000);
+		GPIO_ToggleBits(GPIOD, GPIO_Pin_13);
+		vTaskDelayUntil(&LastWake, 1000);
 	}
 }
 
 static void BlueLedControl(void *Parameters)
 {
 	portTickType LastWake;
-	unsigned char c;
 
-	GPIO_SetBits(GPIOD, GPIO_Pin_15);
+	GPIO_SetBits(GPIOD, GPIO_Pin_14);
 
 	LastWake = xTaskGetTickCount();
 
 	while(1) {
-		xQueueReceive(xQueue, &c, 10000);
-		GPIO_ToggleBits(GPIOD, GPIO_Pin_15);
+		xSemaphoreTake(blue_sig, portMAX_DELAY);
+		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
 	}
 }
 
@@ -149,18 +148,12 @@ int main()
 	hw_init();
 	blink(5, GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
 
-	xTaskCreate(LedFlash, (signed char *) "led1", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_12, tskIDLE_PRIORITY + 2, NULL);
-	blink(3, GPIOD, GPIO_Pin_12);
+	xTaskCreate(LedFlash, (signed char *) "led", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_12, tskIDLE_PRIORITY + 2, NULL);
 
-	xTaskCreate(LedFlash, (signed char *) "led2", configMINIMAL_STACK_SIZE, (void *) GPIO_Pin_13, tskIDLE_PRIORITY + 3, NULL);
-	blink(3, GPIOD, GPIO_Pin_13);
-
-	xQueue = xQueueCreate( 10, sizeof( unsigned char ) );
+	vSemaphoreCreateBinary(blue_sig);
 	xTaskCreate(BlueLedControl, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
-	blink(3, GPIOD, GPIO_Pin_15);
 
 	xTaskCreate(USBHidTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-	blink(3, GPIOD, GPIO_Pin_14);
 
 	vTaskStartScheduler();
 
