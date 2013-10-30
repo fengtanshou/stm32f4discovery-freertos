@@ -21,7 +21,6 @@
   */
 
 #include "usb_bsp.h"
-#include "usbd_conf.h"
 
 void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
 {

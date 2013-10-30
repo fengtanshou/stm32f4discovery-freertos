@@ -3,13 +3,13 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 
-extern xSemaphoreHandle blue_sig;
+//extern xSemaphoreHandle blue_sig;
 
 __IO uint32_t timer_tim2_count = 0;
 
 void timer_tim2_irq(void)
 {
-	signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+	//signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
 	{

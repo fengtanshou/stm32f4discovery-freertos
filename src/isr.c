@@ -4,10 +4,7 @@
 #include "semphr.h"
 #include "task.h"
 
-#include "usbd_cdc_core.h"
-#include "usbd_desc.h"
 #include "usbd_usr.h"
-#include "usb_conf.h"
 
 extern USB_OTG_CORE_HANDLE  USB_OTG_dev;
 extern xSemaphoreHandle blue_sig;
@@ -24,18 +21,6 @@ void EXTI0_IRQHandler(void)
 		/* Clear the EXTI line 0 pending bit */
 		EXTI_ClearITPendingBit(EXTI_Line0);
 	}
-}
-
-void OTG_FS_WKUP_IRQHandler(void)
-{
-	if(USB_OTG_dev.cfg.low_power)
-	{
-		 *(uint32_t *)(0xE000ED10) &= 0xFFFFFFF9 ;
-		SystemInit();
-		USB_OTG_UngateClock(&USB_OTG_dev);
-	}
-
-	EXTI_ClearITPendingBit(EXTI_Line18);
 }
 
 void OTG_FS_IRQHandler(void)

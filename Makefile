@@ -17,6 +17,7 @@ OBJCOPY = $(CROSS_COMPILE)objcopy
 SRC_DIR = src
 OBJ_DIR = build
 INC_DIR = include
+DRV_DIR = drivers
 
 # Vendor paths
 
@@ -34,7 +35,8 @@ LIBGCC  = $(shell $(CC) -mthumb -mcpu=cortex-m4 -print-libgcc-file-name)
 
 # Project basic functionality
 
-CFLAGS += -I$(INC_DIR)
+CFLAGS += \
+	-I$(INC_DIR)
 
 DEMO_SRCS += \
 	src/main.c \
@@ -43,10 +45,13 @@ DEMO_SRCS += \
 	src/stdlib.c \
 	src/stubs.c \
 	src/misc.c \
-	src/tim2.c \
-	src/callbacks.c \
+	src/hw_init.c \
+	src/bsp_callbacks.c \
 	src/printf.c \
 	src/isr.c
+
+DEMO_SRCS += \
+	drivers/tim2.c
 
 # ST common BSP
 
@@ -109,14 +114,13 @@ DEMO_SRCS += \
 
 # Project USB functionality
 
-CFLAGS += -Iusb_fs_vcp
+CFLAGS += -Iusb_fs_vcp_driver
 
 DEMO_SRCS += \
-	usb_fs_vcp/usb_bsp.c \
-	usb_fs_vcp/usbd_usr.c \
-	usb_fs_vcp/usbd_desc.c \
-	usb_fs_vcp/usbd_cdc_vcp.c \
-	usb_fs_vcp/usb_sys_glue.c
+	usb_fs_vcp_driver/usb_bsp.c \
+	usb_fs_vcp_driver/usbd_desc.c \
+	usb_fs_vcp_driver/usbd_cdc_vcp.c \
+	usb_fs_vcp_driver/usb_sys_glue.c
 
 #
 
