@@ -47,6 +47,7 @@ LD	Makefile	/^LD = $(CROSS_COMPILE)ld$/;"	m
 LDFLAGS	Makefile	/^LDFLAGS = -Tstm32f4-flash.ld$/;"	m
 LIBGCC	Makefile	/^LIBGCC  = $(shell $(CC) -mthumb -mcpu=cortex-m4 -print-libgcc-file-name)$/;"	m
 LINE_CODING	usb_fs_vcp/usbd_cdc_vcp.h	/^} LINE_CODING;$/;"	t	typeref:struct:__anon1
+LIS302DL_TIMEOUT_UserCallback	src/callbacks.c	/^uint32_t LIS302DL_TIMEOUT_UserCallback(void)$/;"	f
 LedFlash	src/main.c	/^static void LedFlash(void *Parameters)$/;"	f	file:
 LoopCopyDataInit	src/startup_stm32f4xx.s	/^LoopCopyDataInit:$/;"	l
 LoopFillZerobss	src/startup_stm32f4xx.s	/^LoopFillZerobss:$/;"	l
@@ -55,10 +56,13 @@ OBJ_DIR	Makefile	/^OBJ_DIR = build$/;"	m
 OTG_FS_IRQHandler	src/isr.c	/^void OTG_FS_IRQHandler(void)$/;"	f
 OTG_FS_WKUP_IRQHandler	src/isr.c	/^void OTG_FS_WKUP_IRQHandler(void)$/;"	f
 OTHER_CONFIG	usb_fs_vcp/usbd_cdc_vcp.h	42;"	d
+PAD_RIGHT	src/printf.c	37;"	d	file:
+PAD_ZERO	src/printf.c	38;"	d	file:
 PLL_M	src/system_stm32f4xx.c	112;"	d	file:
 PLL_N	src/system_stm32f4xx.c	113;"	d	file:
 PLL_P	src/system_stm32f4xx.c	116;"	d	file:
 PLL_Q	src/system_stm32f4xx.c	119;"	d	file:
+PRINT_BUF_LEN	src/printf.c	71;"	d	file:
 RX_FIFO_FS_SIZE	usb_fs_vcp/usb_conf.h	30;"	d
 Reset_Handler	src/startup_stm32f4xx.s	/^Reset_Handler:$/;"	l
 SRC_DIR	Makefile	/^SRC_DIR = src$/;"	m
@@ -160,6 +164,8 @@ __packed	usb_fs_vcp/usb_conf.h	64;"	d
 __packed	usb_fs_vcp/usb_conf.h	66;"	d
 __packed	usb_fs_vcp/usb_conf.h	68;"	d
 __packed	usb_fs_vcp/usb_conf.h	70;"	d
+acc_filter_init	src/main.c	/^LIS302DL_FilterConfigTypeDef acc_filter_init;$/;"	v
+acc_init	src/main.c	/^LIS302DL_InitTypeDef  acc_init;$/;"	v
 assert_param	include/stm32f4xx_conf.h	85;"	d
 assert_param	include/stm32f4xx_conf.h	89;"	d
 bitrate	usb_fs_vcp/usbd_cdc_vcp.h	/^	uint32_t bitrate;$/;"	m	struct:__anon1
@@ -208,11 +214,19 @@ gpio_init	src/main.c	/^GPIO_InitTypeDef gpio_init;$/;"	v
 hw_init	src/main.c	/^static void hw_init(void)$/;"	f	file:
 linecoding	usb_fs_vcp/usbd_cdc_vcp.c	/^LINE_CODING linecoding = {$/;"	v
 main	src/main.c	/^int main()$/;"	f
+main	src/printf.c	/^int main(void)$/;"	f
 memcpy	src/stdlib.c	/^void * memcpy(void *dest, const void *src, size_t n)$/;"	f
 memset	src/stdlib.c	/^void * memset(void *s, int c, size_t n)$/;"	f
 nvic_init	src/main.c	/^NVIC_InitTypeDef nvic_init;$/;"	v
 paritytype	usb_fs_vcp/usbd_cdc_vcp.h	/^	uint8_t  paritytype;$/;"	m	struct:__anon1
+print	src/printf.c	/^static int print(char **out, int *varg)$/;"	f	file:
+printchar	src/printf.c	/^static void printchar(char **str, int c)$/;"	f	file:
+printf	src/printf.c	/^int printf(const char *format, ...)$/;"	f
+printi	src/printf.c	/^static int printi(char **out, int i, int b, int sg, int width, int pad, int letbase)$/;"	f	file:
+prints	src/printf.c	/^static int prints(char **out, const char *string, int width, int pad)$/;"	f	file:
+putchar	src/printf.c	25;"	d	file:
 size_t	src/stdlib.c	3;"	d	file:
+sprintf	src/printf.c	/^int sprintf(char *out, const char *format, ...)$/;"	f
 strcat	src/stdlib.c	/^char * strcat(char *dest, const char *src)$/;"	f
 strlen	src/stdlib.c	/^size_t strlen(const char *s)$/;"	f
 strncat	src/stdlib.c	/^char * strncat(char *dest, const char *src, size_t n)$/;"	f

@@ -44,6 +44,8 @@ DEMO_SRCS += \
 	src/stubs.c \
 	src/misc.c \
 	src/tim2.c \
+	src/callbacks.c \
+	src/printf.c \
 	src/isr.c
 
 # ST common BSP
@@ -98,6 +100,12 @@ DEMO_SRCS += \
 	$(STM_DIR)/Libraries/STM32_USB_OTG_Driver/src/usb_core.c \
 	$(STM_DIR)/Libraries/STM32_USB_OTG_Driver/src/usb_dcd.c \
 	$(STM_DIR)/Libraries/STM32_USB_OTG_Driver/src/usb_dcd_int.c
+
+# ST MEMS driver
+
+DEMO_SRCS += \
+	$(STM_DIR)/Utilities/STM32F4-Discovery/stm32f4_discovery_lis302dl.c
+
 
 # Project USB functionality
 

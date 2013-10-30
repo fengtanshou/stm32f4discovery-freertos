@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "stm32f4xx_conf.h"
+#include "stm32f4_discovery_lis302dl.h"
 
 #include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
@@ -22,6 +23,9 @@ __ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 GPIO_InitTypeDef gpio_init;
 NVIC_InitTypeDef nvic_init;
 EXTI_InitTypeDef exti_init;
+
+LIS302DL_InitTypeDef  acc_init;
+LIS302DL_FilterConfigTypeDef acc_filter_init;
 
 xSemaphoreHandle blue_sig;
 xSemaphoreHandle usb_rx_sig;
@@ -83,6 +87,26 @@ static void hw_init(void)
 
 	timer_tim2_init();
 
+	/* Enable accelerometer */
+
+	acc_init.Power_Mode = LIS302DL_LOWPOWERMODE_ACTIVE;
+	acc_init.Output_DataRate = LIS302DL_DATARATE_100;
+	acc_init.Axes_Enable = LIS302DL_XYZ_ENABLE;
+	acc_init.Full_Scale = LIS302DL_FULLSCALE_2_3;
+	acc_init.Self_Test = LIS302DL_SELFTEST_NORMAL;
+	LIS302DL_Init(&acc_init);
+
+	/* Required delay for accelerometer: turn-on time = 3/(output data rate) = 3/100 = 30ms */
+
+	delay(30);
+
+	/* Enable MEMS high pass filter */
+
+	acc_filter_init.HighPassFilter_Data_Selection = LIS302DL_FILTEREDDATASELECTION_OUTPUTREGISTER;
+	acc_filter_init.HighPassFilter_CutOff_Frequency = LIS302DL_HIGHPASSFILTER_LEVEL_1;
+	acc_filter_init.HighPassFilter_Interrupt = LIS302DL_HIGHPASSFILTERINTERRUPT_1_2;
+	LIS302DL_FilterConfig(&acc_filter_init);
+
 	/* Enable USB device */
 
 	USBD_Init(&USB_OTG_dev, USB_OTG_FS_CORE_ID, &USR_desc, &USBD_CDC_cb, &USR_cb);
@@ -111,7 +135,7 @@ static void LedFlash(void *Parameters)
 
 	while(1) {
 		GPIO_ToggleBits(GPIOD, GPIO_Pin_12);
-		vTaskDelayUntil(&LastWake, 500);
+		vTaskDelayUntil(&LastWake, 1000);
 	}
 }
 
@@ -138,26 +162,42 @@ static void VcpEchoTask(void *Parameters)
 
 static void BlueLedControl(void *Parameters)
 {
+	uint8_t buffer[6];
+
 	GPIO_SetBits(GPIOD, GPIO_Pin_14);
 
 	while(1) {
 		xSemaphoreTake(blue_sig, portMAX_DELAY);
 		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
-		VCP_send_str("hello\n\r\0");
+
+		LIS302DL_Read(buffer, LIS302DL_OUT_X_ADDR, 6);
+		printf("[0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x]\n\r",
+			buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5]);
 	}
 }
 
 int main()
 {
+	/* init OS structures */
+
+	/* FIXME: don't send over usb until it is not connected */
+	vSemaphoreCreateBinary(usb_rx_sig);
+	xSemaphoreTake(usb_rx_sig, portMAX_DELAY);
+
+	vSemaphoreCreateBinary(blue_sig);
+	xSemaphoreTake(blue_sig, portMAX_DELAY);
+
+	/* init hw */
+
 	hw_init();
 	blink(5, GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
 
+	/* setup tasks */
+
 	xTaskCreate(LedFlash, (signed char *) "led", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 2, NULL);
 
-	vSemaphoreCreateBinary(blue_sig);
 	xTaskCreate(BlueLedControl, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
 
-	vSemaphoreCreateBinary(usb_rx_sig);
 	xTaskCreate(VcpEchoTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 
 	vTaskStartScheduler();
