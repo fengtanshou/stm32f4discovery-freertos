@@ -1,4 +1,9 @@
+#include <stdint.h>
+
 #include "stm32f4xx_conf.h"
+
+#include "stm32f4_discovery_audio_codec.h"
+#include "stm32f4_discovery_lis302dl.h"
 
 #include "usbd_usr.h"
 #include "usbd_ioreq.h"
@@ -8,6 +13,23 @@
 uint32_t LIS302DL_TIMEOUT_UserCallback(void)
 {
 	critical_error_blink();
+}
+
+/* Audio callbacks */
+
+void EVAL_AUDIO_TransferComplete_CallBack(uint32_t buffer, uint32_t size)
+{
+	EVAL_AUDIO_Stop(CODEC_PDWN_HW);
+}
+
+uint32_t Codec_TIMEOUT_UserCallback(void)
+{
+
+}
+
+uint16_t EVAL_AUDIO_GetSampleCallBack(void)
+{
+
 }
 
 /* USB device callbacks */

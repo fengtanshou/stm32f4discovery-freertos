@@ -1,5 +1,6 @@
 #include "stm32f4xx_conf.h"
 #include "stm32f4_discovery_lis302dl.h"
+#include "stm32f4_discovery_audio_codec.h"
 
 #include "usbd_cdc_core.h"
 #include "usbd_desc.h"
@@ -90,6 +91,11 @@ void hw_init(void)
 	acc_filter_init.HighPassFilter_CutOff_Frequency = LIS302DL_HIGHPASSFILTER_LEVEL_1;
 	acc_filter_init.HighPassFilter_Interrupt = LIS302DL_HIGHPASSFILTERINTERRUPT_1_2;
 	LIS302DL_FilterConfig(&acc_filter_init);
+
+	/* Enable audio */
+
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1 | RCC_APB1Periph_SPI3, ENABLE);
+	RCC_PLLI2SCmd(ENABLE);
 
 	/* Enable USB device */
 

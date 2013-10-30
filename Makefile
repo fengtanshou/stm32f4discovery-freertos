@@ -111,6 +111,10 @@ DEMO_SRCS += \
 DEMO_SRCS += \
 	$(STM_DIR)/Utilities/STM32F4-Discovery/stm32f4_discovery_lis302dl.c
 
+# ST audio driver
+
+DEMO_SRCS += \
+	$(STM_DIR)/Utilities/STM32F4-Discovery/stm32f4_discovery_audio_codec.c
 
 # Project USB functionality
 

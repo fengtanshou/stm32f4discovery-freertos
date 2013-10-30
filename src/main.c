@@ -9,6 +9,7 @@
 #include "semphr.h"
 #include "task.h"
 
+#include "stm32f4_discovery_audio_codec.h"
 #include "stm32f4_discovery_lis302dl.h"
 #include "usbd_cdc_vcp.h"
 #include "tim2.h"
@@ -51,7 +52,7 @@ static void VcpEchoTask(void *Parameters)
 	}
 }
 
-static void BlueLedControl(void *Parameters)
+static void BlueLedControl1(void *Parameters)
 {
 	uint8_t buffer[6];
 
@@ -66,6 +67,25 @@ static void BlueLedControl(void *Parameters)
 			buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5]);
 	}
 }
+
+static void BlueLedControl2(void *Parameters)
+{
+
+#define AUDIO_SIZE 446636
+#define AUDIO_ADDR 0x08020000
+
+	GPIO_SetBits(GPIOD, GPIO_Pin_14);
+
+	while(1) {
+		xSemaphoreTake(blue_sig, portMAX_DELAY);
+		GPIO_ToggleBits(GPIOD, GPIO_Pin_14);
+
+		EVAL_AUDIO_SetAudioInterface(AUDIO_INTERFACE_I2S);
+		EVAL_AUDIO_Init(OUTPUT_DEVICE_HEADPHONE, 200, I2S_AudioFreq_11k);
+		EVAL_AUDIO_Play((uint16_t *) AUDIO_ADDR, AUDIO_SIZE);
+	}
+}
+
 
 int main()
 {
@@ -89,7 +109,7 @@ int main()
 	/* setup tasks */
 
 	xTaskCreate(LedFlash, (signed char *) "led", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 2, NULL);
-	xTaskCreate(BlueLedControl, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
+	xTaskCreate(BlueLedControl2, (signed char *) "button", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL);
 	xTaskCreate(VcpEchoTask, (signed char *) "usb", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 
 	/* 'ok' blink */

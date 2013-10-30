@@ -11,7 +11,10 @@ APP_TX_BUF_SIZE	usb_fs_vcp_driver/usbd_cdc_vcp.c	169;"	d	file:
 APP_Tx_Buffer	usb_fs_vcp_driver/usbd_cdc_vcp.c	/^uint8_t APP_Tx_Buffer[APP_TX_BUF_SIZE];$/;"	v
 APP_tx_ptr_head	usb_fs_vcp_driver/usbd_cdc_vcp.c	/^uint32_t APP_tx_ptr_head;$/;"	v
 APP_tx_ptr_tail	usb_fs_vcp_driver/usbd_cdc_vcp.c	/^uint32_t APP_tx_ptr_tail;$/;"	v
-BlueLedControl	src/main.c	/^static void BlueLedControl(void *Parameters)$/;"	f	file:
+AUDIO_ADDR	src/main.c	75;"	d	file:
+AUDIO_SIZE	src/main.c	74;"	d	file:
+BlueLedControl1	src/main.c	/^static void BlueLedControl1(void *Parameters)$/;"	f	file:
+BlueLedControl2	src/main.c	/^static void BlueLedControl2(void *Parameters)$/;"	f	file:
 CC	Makefile	/^CC = $(CROSS_COMPILE)gcc$/;"	m
 CDC_CMD_EP	usb_fs_vcp_driver/usbd_conf.h	32;"	d
 CDC_CMD_PACKET_SZE	usb_fs_vcp_driver/usbd_conf.h	35;"	d
@@ -21,6 +24,7 @@ CDC_IN_FRAME_INTERVAL	usb_fs_vcp_driver/usbd_conf.h	36;"	d
 CDC_OUT_EP	usb_fs_vcp_driver/usbd_conf.h	31;"	d
 CFLAGS	Makefile	/^CFLAGS = -g -Wall -O2$/;"	m
 CROSS_COMPILE	Makefile	/^CROSS_COMPILE ?= \/home\/matsi\/devel\/tools\/Sourcery_CodeBench_Lite_for_ARM_GNU_Linux-2013.05-24\/bin\/arm-none-linux-gnueabi-$/;"	m
+Codec_TIMEOUT_UserCallback	src/bsp_callbacks.c	/^uint32_t Codec_TIMEOUT_UserCallback(void)$/;"	f
 CopyDataInit	src/startup_stm32f4xx.s	/^CopyDataInit:$/;"	l
 DEFAULT_CONFIG	usb_fs_vcp_driver/usbd_cdc_vcp.h	41;"	d
 DEMO_OBJS	Makefile	/^DEMO_OBJS := $(DEMO_OBJS:.s=.o)$/;"	m
@@ -28,6 +32,8 @@ DEMO_OBJS	Makefile	/^DEMO_OBJS := $(DEMO_SRCS:.c=.o)$/;"	m
 DEMO_OBJS	Makefile	/^DEMO_OBJS := $(addprefix $(OBJ_DIR)\/,$(DEMO_OBJS))$/;"	m
 DRV_DIR	Makefile	/^DRV_DIR = drivers$/;"	m
 Default_Handler	src/startup_stm32f4xx.s	/^Default_Handler:$/;"	l
+EVAL_AUDIO_GetSampleCallBack	src/bsp_callbacks.c	/^uint16_t EVAL_AUDIO_GetSampleCallBack(void)$/;"	f
+EVAL_AUDIO_TransferComplete_CallBack	src/bsp_callbacks.c	/^void EVAL_AUDIO_TransferComplete_CallBack(uint32_t buffer, uint32_t size)$/;"	f
 EXTI0_IRQHandler	src/isr.c	/^void EXTI0_IRQHandler(void)$/;"	f
 FREERTOS_CONFIG_H	include/FreeRTOSConfig.h	71;"	d
 FREERTOS_DIR	Makefile	/^FREERTOS_DIR ?= \/home\/matsi\/code\/FreeRTOSV7.3.0\/FreeRTOS$/;"	m
